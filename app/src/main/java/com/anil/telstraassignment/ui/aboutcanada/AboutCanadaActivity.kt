@@ -10,5 +10,8 @@ class AboutCanadaActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_aboutcanada)
 
+        // set fragment to this activity
+        replaceFragment(AboutCanadaFragment(), AboutCanadaFragment::class.java.simpleName, false)
+
     }
 }
