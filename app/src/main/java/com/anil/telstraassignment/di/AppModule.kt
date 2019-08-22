@@ -8,5 +8,5 @@ import dagger.Provides
 class AppModule(private val application: Application) {
 
     @Provides
-    fun getApplication() : Application = application
+    fun provideApplication() : Application = application
 }
