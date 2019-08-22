@@ -71,6 +71,15 @@ class AboutCanadaFragment : Fragment() {
 
         // observe loading state 
         viewModel.getLoadingState().observe(this, Observer { loadingState -> handleLoadingState(loadingState) })
+
+        // observe error message
+        viewModel.getErrorMessage().observe(this, Observer { errorMessage -> handleErrorMessage(errorMessage) })
+
+    }
+
+    private fun handleErrorMessage(errorMessage: Int?) {
+        tv_error.visibility = View.VISIBLE
+        tv_error.text = errorMessage?.let { resources.getString(it) }
     }
 
     private fun handleLoadingState(loadingState: Int?) {
@@ -82,6 +91,7 @@ class AboutCanadaFragment : Fragment() {
             }
             View.VISIBLE -> {
                 iv_loader.visibility = View.VISIBLE
+                tv_error.visibility = View.GONE
                 val loaderAnim = AnimationUtils.loadAnimation(activity, R.anim.loader)
                 iv_loader.startAnimation(loaderAnim)
             }

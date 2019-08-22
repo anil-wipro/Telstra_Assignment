@@ -15,4 +15,9 @@ class AboutCanadaViewModel(private val repository: AboutCanadaRepository) : View
     fun getLoadingState(): MutableLiveData<Int> {
         return repository.getLoadingState()
     }
+
+    // get error message
+    fun getErrorMessage(): MutableLiveData<Int> {
+        return repository.getErrorMessage()
+    }
 }
