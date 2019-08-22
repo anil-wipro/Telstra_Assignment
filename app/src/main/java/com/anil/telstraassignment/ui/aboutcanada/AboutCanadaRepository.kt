@@ -2,6 +2,7 @@ package com.anil.telstraassignment.ui.aboutcanada
 
 import android.arch.lifecycle.MutableLiveData
 import android.util.Log
+import android.view.View
 import com.anil.telstraassignment.data.ItemAboutCanada
 import com.anil.telstraassignment.network.ApiInterface
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -13,7 +14,9 @@ class AboutCanadaRepository
 constructor(private val apiInterface: ApiInterface) {
 
     private val aboutCanadaResult: MutableLiveData<ItemAboutCanada> = MutableLiveData()
+    private val loadingState: MutableLiveData<Int> = MutableLiveData()
 
+    // get api data
     fun getAboutCanadaDataFromAPI(): MutableLiveData<ItemAboutCanada> {
 
         apiInterface.getAboutCanadaData().subscribeOn(Schedulers.io())
@@ -28,6 +31,11 @@ constructor(private val apiInterface: ApiInterface) {
         return aboutCanadaResult
     }
 
+    // get loading state
+    fun getLoadingState(): MutableLiveData<Int> {
+        return loadingState
+    }
+
     private fun onRetrieveDataError(error: Throwable?) {
         Log.d("Hello", error.toString())
     }
@@ -37,9 +45,11 @@ constructor(private val apiInterface: ApiInterface) {
     }
 
     private fun onRetrieveDataFinish() {
+        loadingState.value = View.GONE
     }
 
     private fun onRetrieveDataStart() {
+        loadingState.value = View.VISIBLE
     }
 
 }

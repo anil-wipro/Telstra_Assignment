@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import com.anil.telstraassignment.MyApplication
 import com.anil.telstraassignment.R
 import com.anil.telstraassignment.data.ItemAboutCanada
@@ -64,14 +65,34 @@ class AboutCanadaFragment : Fragment() {
     }
 
     private fun observeViewModel() {
+        
+        // observe result
         viewModel.getAboutCanadaData()?.observe(this, Observer { result -> showDataToUI(result) })
+
+        // observe loading state 
+        viewModel.getLoadingState().observe(this, Observer { loadingState -> handleLoadingState(loadingState) })
+    }
+
+    private fun handleLoadingState(loadingState: Int?) {
+
+        when (loadingState) {
+            View.GONE -> {
+                iv_loader.visibility = View.GONE
+                iv_loader.clearAnimation()
+            }
+            View.VISIBLE -> {
+                iv_loader.visibility = View.VISIBLE
+                val loaderAnim = AnimationUtils.loadAnimation(activity, R.anim.loader)
+                iv_loader.startAnimation(loaderAnim)
+            }
+        }
     }
 
     private fun showDataToUI(itemAboutCanada: ItemAboutCanada?) {
 
         (activity).supportActionBar?.title = itemAboutCanada?.title
 
-        itemAboutCanada?.let { aboutCanadaAdapter.setData(itemAboutCanada?.rows) }
+        itemAboutCanada?.let { aboutCanadaAdapter.setData(itemAboutCanada.rows) }
     }
 
 }

@@ -17,4 +17,14 @@
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             tools:listitem="@layout/itemlist_aboutcanada"/>
 
+    <ImageView
+            android:id="@+id/iv_loader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_loading" />
+
 </android.support.constraint.ConstraintLayout>

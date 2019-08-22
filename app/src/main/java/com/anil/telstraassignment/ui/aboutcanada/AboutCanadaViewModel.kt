@@ -10,4 +10,9 @@ class AboutCanadaViewModel(private val repository: AboutCanadaRepository) : View
     fun getAboutCanadaData(): MutableLiveData<ItemAboutCanada>? {
         return repository.getAboutCanadaDataFromAPI()
     }
+
+    // get loading state
+    fun getLoadingState(): MutableLiveData<Int> {
+        return repository.getLoadingState()
+    }
 }
