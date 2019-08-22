@@ -27,7 +27,7 @@ class AboutCanadaAdapter(private val context: Context) : RecyclerView.Adapter<Ab
 
         holder.title.text = row.title
         holder.description.text = row.description
-        Picasso.get().load(row.imageHref).fit().tag(context).into(holder.imageHref)
+        Picasso.get().load(row.imageHref).fit().tag(context).placeholder(R.drawable.placeholder_image).error(R.drawable.placeholder_image).into(holder.imageHref)
     }
 
     fun setData(itemListAboutCanada: ArrayList<ItemListAboutCanada>){

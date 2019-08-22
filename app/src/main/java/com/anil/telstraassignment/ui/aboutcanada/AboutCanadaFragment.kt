@@ -69,6 +69,8 @@ class AboutCanadaFragment : Fragment() {
 
     private fun showDataToUI(itemAboutCanada: ItemAboutCanada?) {
 
+        (activity).supportActionBar?.title = itemAboutCanada?.title
+
         itemAboutCanada?.let { aboutCanadaAdapter.setData(itemAboutCanada?.rows) }
     }
 
