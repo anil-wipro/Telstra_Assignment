@@ -51,7 +51,9 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
     implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$retrofit_rx_adapter_version"
 
-
+    // Different text sizes and margin
+    implementation "com.intuit.ssp:ssp-android:$sdp_version"
+    implementation "com.intuit.sdp:sdp-android:$sdp_version"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
