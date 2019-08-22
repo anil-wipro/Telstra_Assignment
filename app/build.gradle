@@ -62,6 +62,9 @@ dependencies {
     // Viewmodel and livedata
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
 
+    // image display and cache
+    implementation "com.squareup.picasso:picasso:$picasso_lib_version"
+
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
