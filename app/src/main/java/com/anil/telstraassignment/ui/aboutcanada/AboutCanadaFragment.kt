@@ -114,7 +114,7 @@ class AboutCanadaFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
         (activity).supportActionBar?.title = itemAboutCanada?.title
 
-        itemAboutCanada?.let { aboutCanadaAdapter.setData(itemAboutCanada.rows) }
+        itemAboutCanada?.let { itemAboutCanada.rows?.let { it -> aboutCanadaAdapter.setData(it) } }
     }
 
     override fun onRefresh() {
