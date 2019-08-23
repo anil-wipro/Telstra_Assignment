@@ -19,15 +19,15 @@ constructor(private val apiInterface: ApiInterface, private val internetCheck: I
     private val errorMessage: MutableLiveData<Int> = MutableLiveData()
 
     // get api data
-    fun getAboutCanadaDataFromAPI(): MutableLiveData<ItemAboutCanada> {
+    fun getAboutCanadaDataFromAPI(isPullRefresh : Boolean): MutableLiveData<ItemAboutCanada> {
 
         when (internetCheck.isNetworkAvailable()) {
 
             true -> {
                 apiInterface.getAboutCanadaData().subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSubscribe { onRetrieveDataStart() }
-                    .doOnTerminate { onRetrieveDataFinish() }
+                    .doOnSubscribe { onRetrieveDataStart(isPullRefresh) }
+                    .doOnTerminate { onRetrieveDataFinish(isPullRefresh) }
                     .subscribe(
                         { result -> onRetrieveDataSuccess(result) },
                         { error -> onRetrieveDataError(error) }
@@ -61,12 +61,16 @@ constructor(private val apiInterface: ApiInterface, private val internetCheck: I
         aboutCanadaResult.value = result
     }
 
-    private fun onRetrieveDataFinish() {
+    private fun onRetrieveDataFinish(isPullRefresh: Boolean) {
+
+        if(!isPullRefresh)
         loadingState.value = View.GONE
     }
 
-    private fun onRetrieveDataStart() {
+    private fun onRetrieveDataStart(isPullRefresh: Boolean) {
         errorMessage.value = null
+
+        if(!isPullRefresh)
         loadingState.value = View.VISIBLE
     }
 

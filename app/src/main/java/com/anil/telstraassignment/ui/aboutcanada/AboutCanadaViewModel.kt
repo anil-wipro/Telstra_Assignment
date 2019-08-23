@@ -7,8 +7,8 @@ import com.anil.telstraassignment.data.ItemAboutCanada
 class AboutCanadaViewModel(private val repository: AboutCanadaRepository) : ViewModel() {
 
     // get about canada data
-    fun getAboutCanadaData(): MutableLiveData<ItemAboutCanada>? {
-        return repository.getAboutCanadaDataFromAPI()
+    fun getAboutCanadaData(isPullRefresh : Boolean): MutableLiveData<ItemAboutCanada>? {
+        return repository.getAboutCanadaDataFromAPI(isPullRefresh)
     }
 
     // get loading state

@@ -4,8 +4,10 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -19,7 +21,7 @@ import com.anil.telstraassignment.ui.aboutcanada.injection.DaggerAboutCanadaComp
 import kotlinx.android.synthetic.main.fragment_aboutcanada.*
 import javax.inject.Inject
 
-class AboutCanadaFragment : Fragment() {
+class AboutCanadaFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var factory: ViewModelFactory
@@ -46,9 +48,11 @@ class AboutCanadaFragment : Fragment() {
 
         setUpRecyclerView()
 
+        swipeRefresh.setOnRefreshListener(this)
+
         viewModel = ViewModelProviders.of(this, factory).get(AboutCanadaViewModel::class.java)
 
-        observeViewModel()
+        observeViewModel(false)
 
     }
 
@@ -64,12 +68,12 @@ class AboutCanadaFragment : Fragment() {
 
     }
 
-    private fun observeViewModel() {
-        
-        // observe result
-        viewModel.getAboutCanadaData()?.observe(this, Observer { result -> showDataToUI(result) })
+    private fun observeViewModel(isPullRefresh: Boolean) {
 
-        // observe loading state 
+        // observe result
+        viewModel.getAboutCanadaData(isPullRefresh)?.observe(this, Observer { result -> showDataToUI(result) })
+
+        // observe loading state except pull to refresh
         viewModel.getLoadingState().observe(this, Observer { loadingState -> handleLoadingState(loadingState) })
 
         // observe error message
@@ -78,8 +82,13 @@ class AboutCanadaFragment : Fragment() {
     }
 
     private fun handleErrorMessage(errorMessage: Int?) {
-        tv_error.visibility = View.VISIBLE
-        tv_error.text = errorMessage?.let { resources.getString(it) }
+
+        if (swipeRefresh.isRefreshing) {
+            swipeRefresh.isRefreshing = false
+        }
+
+        errorMessage?.let { Snackbar.make(frag_parent, it, 3000).show() }
+
     }
 
     private fun handleLoadingState(loadingState: Int?) {
@@ -91,7 +100,6 @@ class AboutCanadaFragment : Fragment() {
             }
             View.VISIBLE -> {
                 iv_loader.visibility = View.VISIBLE
-                tv_error.visibility = View.GONE
                 val loaderAnim = AnimationUtils.loadAnimation(activity, R.anim.loader)
                 iv_loader.startAnimation(loaderAnim)
             }
@@ -100,9 +108,17 @@ class AboutCanadaFragment : Fragment() {
 
     private fun showDataToUI(itemAboutCanada: ItemAboutCanada?) {
 
+        if (swipeRefresh.isRefreshing) {
+            swipeRefresh.isRefreshing = false
+        }
+
         (activity).supportActionBar?.title = itemAboutCanada?.title
 
         itemAboutCanada?.let { aboutCanadaAdapter.setData(itemAboutCanada.rows) }
+    }
+
+    override fun onRefresh() {
+        observeViewModel(true)
     }
 
 }
