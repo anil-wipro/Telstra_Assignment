@@ -65,8 +65,13 @@ dependencies {
     // image display and cache
     implementation "com.squareup.picasso:picasso:$picasso_lib_version"
 
+    //  Mockito framework
+    testImplementation "org.mockito:mockito-core:$mockito_version"
+    testImplementation "android.arch.core:core-testing:$arch_version"
+
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
