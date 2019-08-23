@@ -11,10 +11,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-class NetworkModule {
+open class NetworkModule {
 
     @Provides
-    fun provideBaseUrl(): String = BuildConfig.HOST
+    open fun provideBaseUrl(): String = BuildConfig.HOST
 
     @Singleton
     @Provides
