@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.anil.telstraassignment.MyApplication
 import com.anil.telstraassignment.R
+import com.anil.telstraassignment.data.ApiResponseHandler
+import com.anil.telstraassignment.data.ApiState
 import com.anil.telstraassignment.data.ItemAboutCanada
 import com.anil.telstraassignment.ui.aboutcanada.injection.DaggerAboutCanadaComponent
 import com.google.android.material.snackbar.Snackbar
@@ -72,34 +74,43 @@ class AboutCanadaFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private fun observeViewModel(isPullRefresh: Boolean) {
 
         // observe result
-        viewModel.getAboutCanadaData(isPullRefresh)?.observe(this, Observer { result -> showDataToUI(result) })
-
-        // observe loading state except pull to refresh
-        viewModel.getLoadingState().observe(this, Observer { loadingState -> handleLoadingState(loadingState) })
-
-        // observe error message
-        viewModel.getErrorMessage().observe(this, Observer { errorMessage -> handleErrorMessage(errorMessage) })
+        viewModel.getAboutCanadaData(isPullRefresh)
+            ?.observe(this, Observer { apiResponseHandler -> handleApiData(apiResponseHandler) })
 
     }
 
-    private fun handleErrorMessage(errorMessage: Int?) {
-
-        if (swipeRefresh.isRefreshing) {
-            swipeRefresh.isRefreshing = false
+    private fun handleApiData(apiResponseHandler: ApiResponseHandler?) {
+        if (apiResponseHandler != null) {
+            when (apiResponseHandler.state) {
+                is ApiState.LOADING -> {
+                    if(!apiResponseHandler.state.isPullRequest)
+                        handleLoadingState(true)
+                }
+                ApiState.ERROR -> {
+                    if (swipeRefresh.isRefreshing) {
+                        swipeRefresh.isRefreshing = false
+                    }
+                    handleLoadingState(false)
+                    apiResponseHandler.errorMessage?.let { Snackbar.make(frag_parent, it, 3000).show() }
+                }
+                ApiState.SUCCESS -> {
+                    if (swipeRefresh.isRefreshing) {
+                        swipeRefresh.isRefreshing = false
+                    }
+                    handleLoadingState(false)
+                    showDataToUI(apiResponseHandler.itemAboutCanada)
+                }
+            }
         }
-
-        errorMessage?.let { Snackbar.make(frag_parent, it, 3000).show() }
-
     }
 
-    private fun handleLoadingState(loadingState: Int?) {
-
+    private fun handleLoadingState(loadingState: Boolean) {
         when (loadingState) {
-            View.GONE -> {
+            false -> {
                 iv_loader.visibility = View.GONE
                 iv_loader.clearAnimation()
             }
-            View.VISIBLE -> {
+            true -> {
                 iv_loader.visibility = View.VISIBLE
                 val loaderAnim = AnimationUtils.loadAnimation(activity, R.anim.loader)
                 iv_loader.startAnimation(loaderAnim)
@@ -108,13 +119,7 @@ class AboutCanadaFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     private fun showDataToUI(itemAboutCanada: ItemAboutCanada?) {
-
-        if (swipeRefresh.isRefreshing) {
-            swipeRefresh.isRefreshing = false
-        }
-
         (activity).supportActionBar?.title = itemAboutCanada?.title
-
         itemAboutCanada?.let { itemAboutCanada.rows?.let { rows -> aboutCanadaAdapter.setData(rows) } }
     }
 

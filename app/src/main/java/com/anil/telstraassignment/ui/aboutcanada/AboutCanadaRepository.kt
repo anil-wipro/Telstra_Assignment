@@ -1,8 +1,9 @@
 package com.anil.telstraassignment.ui.aboutcanada
 
-import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.anil.telstraassignment.R
+import com.anil.telstraassignment.data.ApiResponseHandler
+import com.anil.telstraassignment.data.ApiState
 import com.anil.telstraassignment.data.ItemAboutCanada
 import com.anil.telstraassignment.network.ApiInterface
 import com.anil.telstraassignment.network.InternetCheck
@@ -14,64 +15,37 @@ class AboutCanadaRepository
 @Inject
 constructor(private val apiInterface: ApiInterface, private val internetCheck: InternetCheck) {
 
-    private val aboutCanadaResult: MutableLiveData<ItemAboutCanada> = MutableLiveData()
-    private val loadingState: MutableLiveData<Int> = MutableLiveData()
-    private val errorMessage: MutableLiveData<Int> = MutableLiveData()
+    private val aboutCanadaResult: MutableLiveData<ApiResponseHandler> = MutableLiveData()
 
     // get api data
-    fun getAboutCanadaDataFromAPI(isPullRefresh : Boolean): MutableLiveData<ItemAboutCanada> {
-
+    fun getAboutCanadaDataFromAPI(isPullRefresh: Boolean): MutableLiveData<ApiResponseHandler> {
         when (internetCheck.isNetworkAvailable()) {
-
             true -> {
                 apiInterface.getAboutCanadaData().subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe { onRetrieveDataStart(isPullRefresh) }
-                    .doOnTerminate { onRetrieveDataFinish(isPullRefresh) }
                     .subscribe(
                         { result -> onRetrieveDataSuccess(result) },
                         { onRetrieveDataError() }
                     )
             }
             false -> {
-                errorMessage.value = R.string.internet_unavailable
+                aboutCanadaResult.value = ApiResponseHandler(ApiState.ERROR, R.string.internet_unavailable, null)
             }
         }
-
-
-
         return aboutCanadaResult
     }
 
-    // get loading state
-    fun getLoadingState(): MutableLiveData<Int> {
-        return loadingState
-    }
-
-    // get error message
-    fun getErrorMessage(): MutableLiveData<Int> {
-        return errorMessage
-    }
-
     private fun onRetrieveDataError() {
-        errorMessage.value = R.string.something_wrong
+        aboutCanadaResult.value = ApiResponseHandler(ApiState.ERROR, R.string.something_wrong, null)
     }
 
     private fun onRetrieveDataSuccess(result: ItemAboutCanada?) {
-        aboutCanadaResult.value = result
-    }
-
-    private fun onRetrieveDataFinish(isPullRefresh: Boolean) {
-
-        if(!isPullRefresh)
-        loadingState.value = View.GONE
+        aboutCanadaResult.value = ApiResponseHandler(ApiState.SUCCESS, null, result)
     }
 
     private fun onRetrieveDataStart(isPullRefresh: Boolean) {
-        errorMessage.value = null
-
-        if(!isPullRefresh)
-        loadingState.value = View.VISIBLE
+        aboutCanadaResult.value = ApiResponseHandler(ApiState.LOADING(isPullRefresh), null, null)
     }
 
 }

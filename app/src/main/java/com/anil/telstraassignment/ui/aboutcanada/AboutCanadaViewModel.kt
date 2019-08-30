@@ -1,23 +1,23 @@
 package com.anil.telstraassignment.ui.aboutcanada
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.anil.telstraassignment.data.ItemAboutCanada
+import com.anil.telstraassignment.data.ApiResponseHandler
 
 class AboutCanadaViewModel(private val repository: AboutCanadaRepository) : ViewModel() {
 
-    // get about canada data
-    fun getAboutCanadaData(isPullRefresh : Boolean): MutableLiveData<ItemAboutCanada>? {
-        return repository.getAboutCanadaDataFromAPI(isPullRefresh)
-    }
+    private var aboutCanadaResult: MutableLiveData<ApiResponseHandler> = MutableLiveData()
 
-    // get loading state
-    fun getLoadingState(): MutableLiveData<Int> {
-        return repository.getLoadingState()
-    }
-
-    // get error message
-    fun getErrorMessage(): MutableLiveData<Int> {
-        return repository.getErrorMessage()
+    // get about canada response
+    fun getAboutCanadaData(isPullRefresh: Boolean): LiveData<ApiResponseHandler>? {
+        if (isPullRefresh) {
+            aboutCanadaResult = repository.getAboutCanadaDataFromAPI(isPullRefresh)
+            return aboutCanadaResult
+        } else {
+            if (aboutCanadaResult.value != null)
+                aboutCanadaResult = repository.getAboutCanadaDataFromAPI(isPullRefresh)
+        }
+        return aboutCanadaResult
     }
 }
