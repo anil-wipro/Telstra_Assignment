@@ -14,7 +14,7 @@ class AboutCanadaAdapter : RecyclerView.Adapter<AboutCanadaAdapter.ViewHolder>()
     private var aboutCanadaList: MutableList<ItemListAboutCanada> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
-        var view = LayoutInflater.from(parent.context).inflate(R.layout.itemlist_aboutcanada, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.itemlist_aboutcanada, parent, false)
         return ViewHolder(view)
     }
 
@@ -22,7 +22,7 @@ class AboutCanadaAdapter : RecyclerView.Adapter<AboutCanadaAdapter.ViewHolder>()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        var row = aboutCanadaList[holder.adapterPosition]
+        val row = aboutCanadaList[holder.adapterPosition]
 
         holder.title.text = row.title
         holder.description.text = row.description
@@ -39,8 +39,8 @@ class AboutCanadaAdapter : RecyclerView.Adapter<AboutCanadaAdapter.ViewHolder>()
 
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var title = view.tv_title
-        var description = view.tv_description
-        var imageHref = view.iv_href
+        val title = view.tv_title
+        val description = view.tv_description
+        val imageHref = view.iv_href
     }
 }

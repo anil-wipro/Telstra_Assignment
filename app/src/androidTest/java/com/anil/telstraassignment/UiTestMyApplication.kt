@@ -8,12 +8,10 @@ class UiTestMyApplication : MyApplication() {
 
     companion object {
         private lateinit var appComponent: AppComponent
-        fun getAppComponent() = appComponent
     }
 
     override fun onCreate() {
         super.onCreate()
-
         appComponent = DaggerAppComponent.builder().appModule(AppModule(this))
             .networkModule(NetworkTestModule())
         .build()

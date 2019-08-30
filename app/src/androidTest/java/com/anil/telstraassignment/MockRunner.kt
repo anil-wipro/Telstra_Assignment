@@ -15,6 +15,6 @@ class MockRunner : AndroidJUnitRunner() {
 
     @Throws(InstantiationException::class, IllegalAccessException::class, ClassNotFoundException::class)
     override fun newApplication(cl: ClassLoader, className: String, context: Context): Application {
-        return super.newApplication(cl, UiTestMyApplication::class.java!!.name, context)
+        return super.newApplication(cl, UiTestMyApplication::class.java.name, context)
     }
 }

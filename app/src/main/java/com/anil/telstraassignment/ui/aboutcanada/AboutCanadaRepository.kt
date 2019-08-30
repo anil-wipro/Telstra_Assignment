@@ -1,7 +1,7 @@
 package com.anil.telstraassignment.ui.aboutcanada
 
-import androidx.lifecycle.MutableLiveData
 import android.view.View
+import androidx.lifecycle.MutableLiveData
 import com.anil.telstraassignment.R
 import com.anil.telstraassignment.data.ItemAboutCanada
 import com.anil.telstraassignment.network.ApiInterface
@@ -30,7 +30,7 @@ constructor(private val apiInterface: ApiInterface, private val internetCheck: I
                     .doOnTerminate { onRetrieveDataFinish(isPullRefresh) }
                     .subscribe(
                         { result -> onRetrieveDataSuccess(result) },
-                        { error -> onRetrieveDataError(error) }
+                        { onRetrieveDataError() }
                     )
             }
             false -> {
@@ -53,7 +53,7 @@ constructor(private val apiInterface: ApiInterface, private val internetCheck: I
         return errorMessage
     }
 
-    private fun onRetrieveDataError(error: Throwable?) {
+    private fun onRetrieveDataError() {
         errorMessage.value = R.string.something_wrong
     }
 
