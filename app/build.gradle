@@ -35,9 +35,9 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "com.android.support:appcompat-v7:$support_lib_version"
-    implementation "com.android.support:design:$support_lib_version"
-    implementation "com.android.support.constraint:constraint-layout:$constraint_version"
+    implementation "androidx.appcompat:appcompat:$support_lib_version"
+    implementation "com.google.android.material:material:$material_lib_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_version"
 
     // Dagger for dependency injection
     implementation "com.google.dagger:dagger:$dagger_version"
@@ -60,20 +60,20 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$rx_version"
 
     // Viewmodel and livedata
-    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
 
     // image display and cache
     implementation "com.squareup.picasso:picasso:$picasso_lib_version"
 
     //  Mockito framework
     testImplementation "org.mockito:mockito-core:$mockito_version"
-    testImplementation "android.arch.core:core-testing:$arch_version"
+    testImplementation "androidx.arch.core:core-testing:$arch_version"
 
     // mock web server for testing on localhost
     androidTestImplementation "com.squareup.okhttp3:mockwebserver:$mockwebserver_version"
 
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test:rules:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }

@@ -1,23 +1,23 @@
 package com.anil.telstraassignment.ui.aboutcanada
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.anil.telstraassignment.MyApplication
 import com.anil.telstraassignment.R
 import com.anil.telstraassignment.data.ItemAboutCanada
 import com.anil.telstraassignment.ui.aboutcanada.injection.DaggerAboutCanadaComponent
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_aboutcanada.*
 import javax.inject.Inject
 
@@ -59,7 +59,10 @@ class AboutCanadaFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private fun setUpRecyclerView() {
 
         // set  adapter to recycler view
-        val dividerItemDecoration = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
+        val dividerItemDecoration = DividerItemDecoration(
+            activity,
+            DividerItemDecoration.VERTICAL
+        )
         dividerItemDecoration.setDrawable(ContextCompat.getDrawable(activity, R.drawable.divider_recyclerview)!!)
         rv_about_canada.addItemDecoration(dividerItemDecoration)
         rv_about_canada.layoutManager = LinearLayoutManager(activity)

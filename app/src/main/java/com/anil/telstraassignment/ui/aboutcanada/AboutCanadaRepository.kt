@@ -1,6 +1,6 @@
 package com.anil.telstraassignment.ui.aboutcanada
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import android.view.View
 import com.anil.telstraassignment.R
 import com.anil.telstraassignment.data.ItemAboutCanada
