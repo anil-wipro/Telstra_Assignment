@@ -20,8 +20,9 @@
 
     <ImageView
             android:id="@+id/iv_href"
-            android:layout_width="@dimen/_90sdp"
-            android:layout_height="@dimen/_60sdp"
+            android:scaleType="centerCrop"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_title"/>
 

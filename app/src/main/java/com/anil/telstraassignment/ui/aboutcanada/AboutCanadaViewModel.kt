@@ -15,7 +15,7 @@ class AboutCanadaViewModel(private val repository: AboutCanadaRepository) : View
             aboutCanadaResult = repository.getAboutCanadaDataFromAPI(isPullRefresh)
             return aboutCanadaResult
         } else {
-            if (aboutCanadaResult.value != null)
+            if (aboutCanadaResult.value == null)
                 aboutCanadaResult = repository.getAboutCanadaDataFromAPI(isPullRefresh)
         }
         return aboutCanadaResult
