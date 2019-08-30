@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.anil.telstraassignment.MyApplication
 import com.anil.telstraassignment.R
@@ -58,14 +57,13 @@ class AboutCanadaFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private fun setUpRecyclerView() {
 
-        // set  adapter to recycler view
+        // set adapter to recycler view
         val dividerItemDecoration = DividerItemDecoration(
             activity,
             DividerItemDecoration.VERTICAL
         )
         dividerItemDecoration.setDrawable(ContextCompat.getDrawable(activity, R.drawable.divider_recyclerview)!!)
         rv_about_canada.addItemDecoration(dividerItemDecoration)
-        rv_about_canada.layoutManager = LinearLayoutManager(activity)
         aboutCanadaAdapter = AboutCanadaAdapter()
         rv_about_canada.adapter = aboutCanadaAdapter
 
