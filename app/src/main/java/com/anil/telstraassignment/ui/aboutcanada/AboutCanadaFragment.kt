@@ -51,7 +51,7 @@ class AboutCanadaFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
         swipeRefresh.setOnRefreshListener(this)
 
-        viewModel = ViewModelProviders.of(this, factory).get(AboutCanadaViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity, factory).get(AboutCanadaViewModel::class.java)
 
         observeViewModel(false)
 
