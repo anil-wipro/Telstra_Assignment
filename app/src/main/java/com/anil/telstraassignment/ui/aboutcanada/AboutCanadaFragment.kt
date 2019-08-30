@@ -66,7 +66,7 @@ class AboutCanadaFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         dividerItemDecoration.setDrawable(ContextCompat.getDrawable(activity, R.drawable.divider_recyclerview)!!)
         rv_about_canada.addItemDecoration(dividerItemDecoration)
         rv_about_canada.layoutManager = LinearLayoutManager(activity)
-        aboutCanadaAdapter = AboutCanadaAdapter(activity)
+        aboutCanadaAdapter = AboutCanadaAdapter()
         rv_about_canada.adapter = aboutCanadaAdapter
 
     }

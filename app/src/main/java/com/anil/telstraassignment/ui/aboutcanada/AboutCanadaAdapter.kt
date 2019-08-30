@@ -1,16 +1,15 @@
 package com.anil.telstraassignment.ui.aboutcanada
 
-import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.anil.telstraassignment.R
 import com.anil.telstraassignment.data.ItemListAboutCanada
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.itemlist_aboutcanada.view.*
 
-class AboutCanadaAdapter(private val context: Context) : RecyclerView.Adapter<AboutCanadaAdapter.ViewHolder>() {
+class AboutCanadaAdapter : RecyclerView.Adapter<AboutCanadaAdapter.ViewHolder>() {
 
     private var aboutCanadaList: MutableList<ItemListAboutCanada> = ArrayList()
 
@@ -27,7 +26,7 @@ class AboutCanadaAdapter(private val context: Context) : RecyclerView.Adapter<Ab
 
         holder.title.text = row.title
         holder.description.text = row.description
-        Picasso.get().load(row.imageHref).fit().tag(context).placeholder(R.drawable.placeholder_image).error(R.drawable.placeholder_image).into(holder.imageHref)
+        Picasso.get().load(row.imageHref).fit().tag(holder.imageHref.context).placeholder(R.drawable.placeholder_image).error(R.drawable.placeholder_image).into(holder.imageHref)
     }
 
     fun setData(itemListAboutCanada: ArrayList<ItemListAboutCanada>){
