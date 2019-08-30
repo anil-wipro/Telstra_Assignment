@@ -16,6 +16,6 @@ open class BaseActivity : AppCompatActivity(), BaseCallback {
         if (isBackStack)
             fragmentTransaction.addToBackStack(fragment::class.java.simpleName)
 
-        fragmentTransaction.commitAllowingStateLoss()
+        fragmentTransaction.commit()
     }
 }
