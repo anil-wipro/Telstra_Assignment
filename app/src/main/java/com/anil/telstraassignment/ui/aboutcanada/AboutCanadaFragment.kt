@@ -75,21 +75,20 @@ class AboutCanadaFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         if (apiResponseHandler != null) {
             when (apiResponseHandler.state) {
                 is ApiState.LOADING -> {
-                    if (!swipeRefresh.isRefreshing) {
+                    if (!swipeRefresh.isRefreshing)
                         handleLoadingState(true)
-                    }
                 }
                 ApiState.ERROR -> {
-                    if (swipeRefresh.isRefreshing) {
+                    if (swipeRefresh.isRefreshing)
                         swipeRefresh.isRefreshing = false
-                    }
+
                     handleLoadingState(false)
                     apiResponseHandler.errorMessage?.let { Snackbar.make(frag_parent, it, 3000).show() }
                 }
                 ApiState.SUCCESS -> {
-                    if (swipeRefresh.isRefreshing) {
-                        swipeRefresh.isRefreshing = false
-                    }
+                    if (swipeRefresh.isRefreshing)
+                    swipeRefresh.isRefreshing = false
+
                     handleLoadingState(false)
                     showDataToUI(apiResponseHandler.itemAboutCanada)
                 }

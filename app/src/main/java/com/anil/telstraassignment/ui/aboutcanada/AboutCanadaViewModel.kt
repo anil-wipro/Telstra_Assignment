@@ -10,18 +10,22 @@ class AboutCanadaViewModel(private val repository: AboutCanadaRepository) : View
 
     private val fetchDataTrigger = MutableLiveData<Boolean>()
 
+    // observed lazily and permit functional composition and delegation
     private val users: LiveData<ApiResponseHandler> = Transformations.switchMap(fetchDataTrigger) {
         repository.getAboutCanadaDataFromAPI()
     }
 
+    // load data at the very first time
     init {
         refreshAboutCanadaData()
     }
 
+    // we set value of this mutable live data as true while need to fetch data from server
     fun refreshAboutCanadaData() {
         fetchDataTrigger.value = true
     }
 
+    // get about canada data from live data
     fun getAboutCanadaData(): LiveData<ApiResponseHandler> = users
 
 }

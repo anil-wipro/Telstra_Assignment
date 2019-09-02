@@ -16,7 +16,7 @@ import org.junit.*
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class WeatherFragmentTest {
+class AboutCanadaFragmentTest {
 
     @get:Rule
     val activityRule = ActivityTestRule(AboutCanadaActivity::class.java)
