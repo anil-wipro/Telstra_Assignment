@@ -6,11 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.anil.telstraassignment.MyApplication
 import com.anil.telstraassignment.R
@@ -60,12 +58,6 @@ class AboutCanadaFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private fun setUpRecyclerView() {
 
         // set adapter to recycler view
-        val dividerItemDecoration = DividerItemDecoration(
-            activity,
-            DividerItemDecoration.VERTICAL
-        )
-        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(activity, R.drawable.divider_recyclerview)!!)
-        rv_about_canada.addItemDecoration(dividerItemDecoration)
         aboutCanadaAdapter = AboutCanadaAdapter()
         rv_about_canada.adapter = aboutCanadaAdapter
 
