@@ -26,21 +26,29 @@ class AboutCanadaAdapter : RecyclerView.Adapter<AboutCanadaAdapter.ViewHolder>()
 
         holder.title.text = row.title
         holder.description.text = row.description
-        Picasso.get().load(row.imageHref).fit().tag(holder.imageHref.context).placeholder(R.drawable.placeholder_image).error(R.drawable.placeholder_image).into(holder.imageHref)
+        Picasso.get().load(row.imageHref).fit().tag(holder.imageHref.context).placeholder(R.drawable.placeholder_image)
+            .error(R.drawable.placeholder_image).into(holder.imageHref)
     }
 
-    fun setData(itemListAboutCanada: ArrayList<ItemListAboutCanada>){
+    fun setData(itemListAboutCanada: ArrayList<ItemListAboutCanada>) {
 
         aboutCanadaList.clear()
-        aboutCanadaList.addAll(itemListAboutCanada)
+
+        // skipping row(s) with all the items are null
+        for (item in itemListAboutCanada) {
+            if (item.title == null && item.description == null && item.imageHref == null)
+                continue
+            else
+                aboutCanadaList.add(item)
+        }
         notifyDataSetChanged()
 
     }
 
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val title = view.tv_title
-        val description = view.tv_description
-        val imageHref = view.iv_href
+        val title = view.tv_title!!
+        val description = view.tv_description!!
+        val imageHref = view.iv_href!!
     }
 }

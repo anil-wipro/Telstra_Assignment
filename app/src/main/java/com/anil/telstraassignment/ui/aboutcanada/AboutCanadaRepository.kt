@@ -18,12 +18,12 @@ constructor(private val apiInterface: ApiInterface, private val internetCheck: I
     private val aboutCanadaResult: MutableLiveData<ApiResponseHandler> = MutableLiveData()
 
     // get api data
-    fun getAboutCanadaDataFromAPI(isPullRefresh: Boolean): MutableLiveData<ApiResponseHandler> {
+    fun getAboutCanadaDataFromAPI(): MutableLiveData<ApiResponseHandler> {
         when (internetCheck.isNetworkAvailable()) {
             true -> {
                 apiInterface.getAboutCanadaData().subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSubscribe { onRetrieveDataStart(isPullRefresh) }
+                    .doOnSubscribe { onRetrieveDataStart() }
                     .subscribe(
                         { result -> onRetrieveDataSuccess(result) },
                         { onRetrieveDataError() }
@@ -44,8 +44,8 @@ constructor(private val apiInterface: ApiInterface, private val internetCheck: I
         aboutCanadaResult.value = ApiResponseHandler(ApiState.SUCCESS, null, result)
     }
 
-    private fun onRetrieveDataStart(isPullRefresh: Boolean) {
-        aboutCanadaResult.value = ApiResponseHandler(ApiState.LOADING(isPullRefresh), null, null)
+    private fun onRetrieveDataStart() {
+        aboutCanadaResult.value = ApiResponseHandler(ApiState.LOADING, null, null)
     }
 
 }

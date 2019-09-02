@@ -51,7 +51,7 @@ class AboutCanadaFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
         viewModel = ViewModelProviders.of(activity, factory).get(AboutCanadaViewModel::class.java)
 
-        observeViewModel(false)
+        observeViewModel()
 
     }
 
@@ -63,11 +63,11 @@ class AboutCanadaFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     }
 
-    private fun observeViewModel(isPullRefresh: Boolean) {
+    private fun observeViewModel() {
 
         // observe result
-        viewModel.getAboutCanadaData(isPullRefresh)
-            ?.observe(this, Observer { apiResponseHandler -> handleApiData(apiResponseHandler) })
+        viewModel.getAboutCanadaData()
+            .observe(this, Observer { apiResponseHandler -> handleApiData(apiResponseHandler) })
 
     }
 
@@ -75,8 +75,9 @@ class AboutCanadaFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         if (apiResponseHandler != null) {
             when (apiResponseHandler.state) {
                 is ApiState.LOADING -> {
-                    if(!apiResponseHandler.state.isPullRequest)
+                    if (!swipeRefresh.isRefreshing) {
                         handleLoadingState(true)
+                    }
                 }
                 ApiState.ERROR -> {
                     if (swipeRefresh.isRefreshing) {
@@ -116,7 +117,7 @@ class AboutCanadaFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     override fun onRefresh() {
-        observeViewModel(true)
+        viewModel.refreshAboutCanadaData()
     }
 
 }
